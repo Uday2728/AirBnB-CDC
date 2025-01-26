@@ -23,9 +23,16 @@
 				}
 			},
 			{
-				"name": "Stored procedure1",
+				"name": "Stored procedure for fact agg",
 				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -34,6 +41,9 @@
 					"secureInput": false
 				},
 				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[airbnb].[BookingAggregation]"
+				},
 				"linkedServiceName": {
 					"referenceName": "AzureSynapseForAirBnB",
 					"type": "LinkedServiceReference"
