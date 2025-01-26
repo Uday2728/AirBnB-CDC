@@ -84,7 +84,7 @@
 		],
 		"typeProperties": {
 			"schema": "airbnb",
-			"table": "bookings_fact"
+			"table": "BookingCustomerAggregation"
 		}
 	}
 }
