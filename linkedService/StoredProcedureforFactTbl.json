@@ -1,0 +1,14 @@
+{
+	"name": "StoredProcedureforFactTbl",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDW",
+		"typeProperties": {
+			"server": "mysynapsewokspacedemo.sql.azuresynapse.net",
+			"database": "Air_BnB_WH",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SystemAssignedManagedIdentity"
+		}
+	}
+}
