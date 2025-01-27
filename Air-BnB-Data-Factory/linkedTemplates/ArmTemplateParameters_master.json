@@ -22,6 +22,12 @@
 		},
 		"StoredProcedureforFactTbl_properties_typeProperties_database": {
 			"value": "Air_BnB_WH"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
 		}
 	}
 }
