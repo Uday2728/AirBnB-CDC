@@ -92,9 +92,10 @@
 				"          property_id = property_id,",
 				"          amount = amount,",
 				"          currency = currency) ~> DerivedColumns",
-				"DerivedColumns lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
+				"DerivedColumns, SynapseForLookUp lookup(ERROR_FUNCTION('') == ERROR_FUNCTION(''),",
 				"     multiple: false,",
-				"     pickup: 'any',",
+				"     pickup: 'first',",
+				"     asc(ERROR_FUNCTION(''), true),",
 				"     broadcast: 'auto')~> LookupInSynapse"
 			]
 		}
