@@ -52,7 +52,7 @@
 					"isSequential": true,
 					"activities": [
 						{
-							"name": "Set variable to each file",
+							"name": "Set variable to file",
 							"type": "SetVariable",
 							"dependsOn": [],
 							"policy": {
@@ -61,7 +61,7 @@
 							},
 							"userProperties": [],
 							"typeProperties": {
-								"variableName": "Each File",
+								"variableName": "EachFile",
 								"value": {
 									"value": "@item().name",
 									"type": "Expression"
@@ -69,11 +69,11 @@
 							}
 						},
 						{
-							"name": "Copy data1",
+							"name": "UpsetToSynapse",
 							"type": "Copy",
 							"dependsOn": [
 								{
-									"activity": "Set variable to each file",
+									"activity": "Set variable to file",
 									"dependencyConditions": [
 										"Succeeded"
 									]
@@ -137,6 +137,118 @@
 									"type": "DatasetReference"
 								}
 							]
+						},
+						{
+							"name": "Archiving Raw files",
+							"type": "Copy",
+							"dependsOn": [
+								{
+									"activity": "UpsetToSynapse",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobFSReadSettings",
+										"recursive": true,
+										"wildcardFolderPath": "customer_raw_data",
+										"wildcardFileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										},
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".csv"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "customer_raw_data",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "customer_data_archive",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Delete Raw Files",
+							"type": "Delete",
+							"dependsOn": [
+								{
+									"activity": "Archiving Raw files",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "customer_raw_data",
+									"type": "DatasetReference"
+								},
+								"logStorageSettings": {
+									"linkedServiceName": {
+										"referenceName": "ADLSForAirBnB",
+										"type": "LinkedServiceReference"
+									}
+								},
+								"enableLogging": true,
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"wildcardFileName": {
+										"value": "@item().name",
+										"type": "Expression"
+									},
+									"enablePartitionDiscovery": false
+								}
+							}
 						}
 					]
 				}
@@ -144,6 +256,9 @@
 		],
 		"variables": {
 			"Each File": {
+				"type": "String"
+			},
+			"EachFile": {
 				"type": "String"
 			}
 		},
