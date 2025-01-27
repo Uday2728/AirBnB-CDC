@@ -12,10 +12,6 @@
 					"name": "BookingData"
 				},
 				{
-					"dataset": {
-						"referenceName": "airbnb_bookings_fact",
-						"type": "DatasetReference"
-					},
 					"name": "SynapseForLookUp"
 				}
 			],
@@ -69,10 +65,7 @@
 				"          timestamp as timestamp",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table',",
-				"     staged: true) ~> SynapseForLookUp",
+				"     validateSchema: false) ~> SynapseForLookUp",
 				"BookingData split(check_out_date<check_in_date,",
 				"     disjoint: false) ~> BadRecords@(BadRecords, AcceptedRecords)",
 				"BadRecords@AcceptedRecords derive(stay_duration = (toTimestamp(check_out_date)-toTimestamp(check_in_date))/86400000,",

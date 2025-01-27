@@ -25,7 +25,7 @@
 						"referenceName": "airbnb_bookings_fact",
 						"type": "DatasetReference"
 					},
-					"name": "BookingsFact"
+					"name": "sink1"
 				}
 			],
 			"transformations": [
@@ -160,15 +160,14 @@
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
-				"     updateable:true,",
+				"     updateable:false,",
 				"     upsertable:false,",
-				"     keys:['booking_id'],",
 				"     format: 'table',",
 				"     staged: true,",
 				"     allowCopyCommand: true,",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> BookingsFact"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
