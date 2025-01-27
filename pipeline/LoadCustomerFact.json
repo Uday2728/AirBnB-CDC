@@ -37,7 +37,7 @@
 				}
 			},
 			{
-				"name": "Stored procedure For Fact Table",
+				"name": "Stored procedure1",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
 					{
@@ -59,7 +59,7 @@
 					"storedProcedureName": "[airbnb].[BookingAggregation]"
 				},
 				"linkedServiceName": {
-					"referenceName": "StoredProcedureforFactTbl",
+					"referenceName": "AzureSynapseForAirBnB",
 					"type": "LinkedServiceReference"
 				}
 			}
