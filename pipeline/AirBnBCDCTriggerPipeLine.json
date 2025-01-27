@@ -1,0 +1,47 @@
+{
+	"name": "AirBnBCDCTriggerPipeLine",
+	"properties": {
+		"activities": [
+			{
+				"name": "Load_customer_data",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LoadCustomerDim",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "load_fact_table",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Load_customer_data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "LoadCustomerFact",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"annotations": []
+	}
+}
