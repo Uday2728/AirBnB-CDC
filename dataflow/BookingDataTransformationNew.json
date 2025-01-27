@@ -33,7 +33,7 @@
 					"name": "CorrectRecords"
 				},
 				{
-					"name": "DerivedColumnFromAcceptedRecords"
+					"name": "DerivedColumn"
 				},
 				{
 					"name": "LookupInSynapse"
@@ -104,8 +104,8 @@
 				"          checkin_date = check_in_date,",
 				"          property_id = property_id,",
 				"          amount = amount,",
-				"          currency = currency) ~> DerivedColumnFromAcceptedRecords",
-				"DerivedColumnFromAcceptedRecords, SynapseforLookUp lookup(DerivedColumnFromAcceptedRecords@booking_id == SynapseforLookUp@booking_id,",
+				"          currency = currency) ~> DerivedColumn",
+				"DerivedColumn, SynapseforLookUp lookup(DerivedColumn@booking_id == SynapseforLookUp@booking_id,",
 				"     multiple: false,",
 				"     pickup: 'first',",
 				"     desc(SynapseforLookUp@timestamp, true),",
@@ -113,6 +113,25 @@
 				"LookupInSynapse alterRow(insertIf(isNull(SynapseforLookUp@booking_id)),",
 				"     updateIf(not(isNull(SynapseforLookUp@booking_id)))) ~> AlterRowForUpdate",
 				"AlterRowForUpdate select(mapColumn(",
+				"          check_out_date = DerivedColumn@check_out_date,",
+				"          customer_id = DerivedColumn@customer_id,",
+				"          timestamp = CorrectRecords@AcceptedRecords@timestamp,",
+				"          owner_id = DerivedColumn@owner_id,",
+				"          check_in_date = CorrectRecords@AcceptedRecords@check_in_date,",
+				"          property_id = DerivedColumn@property_id,",
+				"          amount = DerivedColumn@amount,",
+				"          booking_id = DerivedColumn@booking_id,",
+				"          currency = DerivedColumn@currency,",
+				"          property_location,",
+				"          booking_date = DerivedColumn@booking_date,",
+				"          Stay_Duration = DerivedColumn@Stay_Duration,",
+				"          Booking_year = DerivedColumn@Booking_year,",
+				"          Booking_Month = DerivedColumn@Booking_Month,",
+				"          full_address = DerivedColumn@full_address,",
+				"          city = DerivedColumn@city,",
+				"          country = DerivedColumn@country,",
+				"          time_stamp,",
+				"          checkin_date,",
 				"          booking_id = SynapseforLookUp@booking_id,",
 				"          property_id = SynapseforLookUp@property_id,",
 				"          customer_id = SynapseforLookUp@customer_id,",
