@@ -1,0 +1,9 @@
+{
+	"name": "new-data-factory-acc",
+	"location": "northeurope",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "6156ccc1-7afb-414b-95bf-6877850e964d",
+		"tenantId": "b4b153a0-e909-4695-b747-54ee2d1a4f62"
+	}
+}
